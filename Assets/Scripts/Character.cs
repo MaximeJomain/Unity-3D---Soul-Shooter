@@ -1,8 +1,5 @@
-using Cinemachine;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Character : MonoBehaviour
@@ -26,7 +23,7 @@ public class Character : MonoBehaviour
     private Vector2 _look;
     
     private Animator _animator;
-    
+
     private bool _isAttacking;
 
     private void Awake()
@@ -98,7 +95,7 @@ public class Character : MonoBehaviour
         if (_isAttacking == false)
         {
             _isAttacking = true;
-            int randomAttack = Random.Range(1, 4);
+            int randomAttack = Random.Range(1, 2);
             _animator.SetTrigger("attack" + randomAttack);
         }
     }
