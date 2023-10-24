@@ -2,6 +2,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
+public enum CharacterState
+{
+    Unequipped,
+    Equipped_OneHanded,
+}
+public enum ActionState
+{
+    Unoccupied,
+    IsAttacking,
+}
+
 public class Character : MonoBehaviour
 {
     [SerializeField]
@@ -12,6 +23,9 @@ public class Character : MonoBehaviour
 
     [SerializeField]
     private float rotationSpeed = 5f;
+    
+    [SerializeField]
+    private GameObject _equippedWeapon;
 
     [SerializeField]
     private Transform followTransform;
@@ -24,12 +38,20 @@ public class Character : MonoBehaviour
     
     private Animator _animator;
 
-    private bool _isAttacking;
+    private CharacterState _characterState = CharacterState.Unequipped;
+    
+    private ActionState _actionState = ActionState.Unoccupied;
 
+    private Collider _weaponAttackCollider;
+    
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+        
+        // TODO Remove with equipping weapon action
+        _characterState = CharacterState.Equipped_OneHanded;
+        _weaponAttackCollider = _equippedWeapon.GetComponent<Collider>();
     }
 
     private void Start()
@@ -65,7 +87,7 @@ public class Character : MonoBehaviour
 
         if (_move != Vector2.zero)
         {
-            if (_isAttacking) return;
+            if (_actionState == ActionState.IsAttacking) return;
             
             Quaternion targetRotation = Quaternion.Euler(0f, followTransform.rotation.eulerAngles.y, 0f);
 
@@ -92,16 +114,27 @@ public class Character : MonoBehaviour
 
     private void OnFire()
     {
-        if (_isAttacking == false)
+        if (_characterState == CharacterState.Equipped_OneHanded
+            && _actionState == ActionState.Unoccupied)
         {
-            _isAttacking = true;
+            _actionState = ActionState.IsAttacking;
             int randomAttack = Random.Range(1, 2);
             _animator.SetTrigger("attack" + randomAttack);
         }
     }
 
-    public void SetIsAttacking(int value)
+    public void AttackStart()
     {
-        _isAttacking = value != 0;
+        _weaponAttackCollider.enabled = true;
+    }
+
+    public void AttackEnd()
+    {
+        _weaponAttackCollider.enabled = false;
+    }
+
+    public void SetActionState(ActionState actionState)
+    {
+        _actionState = actionState;
     }
 }

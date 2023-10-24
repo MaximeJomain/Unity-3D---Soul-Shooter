@@ -2072,6 +2072,7 @@ MonoBehaviour:
   movementSpeed: 5
   cameraSensitivity: 10
   rotationSpeed: 12
+  _equippedWeapon: {fileID: 2695487427458968728}
   followTransform: {fileID: 0}
 --- !u!4 &2212411122522132448 stripped
 Transform:
@@ -2135,6 +2136,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+--- !u!1 &2695487427458968728 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8182343490316166024, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+  m_PrefabInstance: {fileID: 6117521643200794384}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7268810319508310067 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3460398373222467363, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
