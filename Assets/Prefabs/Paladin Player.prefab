@@ -2070,7 +2070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  cameraSensitivity: 10
+  cameraSensitivity: 5
   rotationSpeed: 12
   _equippedWeapon: {fileID: 2695487427458968728}
   followTransform: {fileID: 0}
