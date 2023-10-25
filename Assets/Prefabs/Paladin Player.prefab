@@ -2024,7 +2024,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &5681289251946530295
@@ -2070,7 +2070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  cameraSensitivity: 5
+  cameraSensitivity: 2
   rotationSpeed: 12
   _equippedWeapon: {fileID: 2695487427458968728}
   followTransform: {fileID: 0}

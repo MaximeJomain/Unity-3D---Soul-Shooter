@@ -53,12 +53,7 @@ public class Character : MonoBehaviour
         _characterState = CharacterState.Equipped_OneHanded;
         _weaponAttackCollider = _equippedWeapon.GetComponent<Collider>();
     }
-
-    private void Start()
-    {
-        cameraSensitivity /= 10;
-    }
-
+    
     private void Update()
     {
         followTransform.position = new Vector3(transform.position.x, followTransform.position.y, transform.position.z);

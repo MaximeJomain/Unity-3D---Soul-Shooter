@@ -10,6 +10,13 @@ public class Enemy : MonoBehaviour
     
     private bool _isAlive = true;
 
+    private Animator _animator;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     private void Update()
     {
         if (_isAlive)
@@ -24,8 +31,8 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         _isAlive = false;
-        Debug.Log(gameObject.name + "died");
-        Destroy(gameObject, 3f);
+        _animator.SetTrigger("death");
+        Destroy(gameObject, 5f);
     }
 
     public void TakeDamage(float damage)
