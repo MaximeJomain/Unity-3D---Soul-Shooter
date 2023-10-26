@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
@@ -12,44 +10,34 @@ public class HealthBar : MonoBehaviour
     [SerializeField]
     private Slider _easeHealthBar;
     
-    private Transform _playerCamera;
-    
     [SerializeField]
+    private Enemy _enemy;
+    
     private float _targetHealth;
 
+    private Transform _playerCamera;
 
-    private void Start()
+
+    private void Awake()
     {
-        // TODO get player health
-        _targetHealth = 100f;
         _playerCamera = Camera.main!.transform;
     }
 
     private void Update()
     {
-        if (_healthBar.value != _targetHealth)
+        if (_healthBar.value != _enemy.Health)
         {
-            _healthBar.value = _targetHealth;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10f);
+            _healthBar.value = _enemy.Health;
         }
 
         if (_easeHealthBar.value != _healthBar.value)
         {
-            _easeHealthBar.value = Mathf.Lerp(_easeHealthBar.value, _targetHealth, 0.025f);
+            _easeHealthBar.value = Mathf.Lerp(_easeHealthBar.value, _enemy.Health, 0.025f);
         }
     }
 
     private void LateUpdate()
     {
-        transform.LookAt(_playerCamera);
-    }
-
-    private void TakeDamage(float damage)
-    {
-        _targetHealth -= damage;
+        transform.LookAt(transform.position + _playerCamera.forward);
     }
 }

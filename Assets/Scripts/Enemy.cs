@@ -6,12 +6,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float health;
+    public float Health;
     
     private bool _isAlive = true;
 
     private Animator _animator;
-
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     {
         if (_isAlive)
         {
-            if (health <= 0f)
+            if (Health <= 0f)
             {
                 Die();
             }      
@@ -37,6 +37,6 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        Health -= damage;
     }
 }
