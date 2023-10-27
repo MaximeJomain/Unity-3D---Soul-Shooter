@@ -49,6 +49,8 @@ public class EnemyCharacter : Character
     {
         if (IsAlive)
         {
+            _animator.SetFloat("speed", MovementSpeed);
+            
             if (Health <= 0f)
             {
                 Die();
