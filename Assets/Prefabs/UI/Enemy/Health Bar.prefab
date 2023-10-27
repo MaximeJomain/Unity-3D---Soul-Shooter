@@ -129,7 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 1187273070441802350}
   _easeHealthBar: {fileID: 2394287346911641840}
-  _enemy: {fileID: 0}
+  _target: {fileID: 0}
+  _isFacingPlayer: 1
 --- !u!1 &4131591828756974971
 GameObject:
   m_ObjectHideFlags: 0

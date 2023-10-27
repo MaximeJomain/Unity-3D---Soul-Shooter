@@ -13,6 +13,9 @@ public class HealthBar : MonoBehaviour
     
     [SerializeField]
     private Character _target;
+
+    [SerializeField]
+    private bool _isFacingPlayer;
     
     private float _targetHealth;
 
@@ -39,6 +42,7 @@ public class HealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.LookAt(transform.position + _playerCamera.forward);
+        if (_isFacingPlayer)
+            transform.LookAt(transform.position + _playerCamera.forward);
     }
 }
