@@ -22,10 +22,10 @@ public class Weapon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Hit" + other.gameObject.name);
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy)
+        Character target = other.GetComponent<Character>();
+        if (target)
         {
-            enemy.TakeDamage(_damage);
+            target.TakeDamage(_damage);
         }
         
     }

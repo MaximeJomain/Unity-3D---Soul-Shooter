@@ -16,7 +16,9 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Copied Avatar Rig Configuration mis-match. Transform hierarchy
+      does not match:\n\tTransform 'mixamorig:LeftEye' for human bone 'LeftEye' not
+      found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -499,23 +501,23 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Enemy Bot(Clone)
+    - name: Y Bot(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Alpha_Surface
-      parentName: Enemy Bot(Clone)
+      parentName: Y Bot(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Alpha_Joints
-      parentName: Enemy Bot(Clone)
+      parentName: Y Bot(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:Hips
-      parentName: Enemy Bot(Clone)
+      parentName: Y Bot(Clone)
       position: {x: 0.00000033015945, y: 0.99791867, z: 0.00000051621345}
       rotation: {x: 7.537291e-11, y: 0.0000017531268, z: -0.000043883512, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -851,7 +853,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 534488e5a013446479c5473651933084, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 6363ec5c93902644abd8dbab51a7b6df, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1

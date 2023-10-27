@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &79467283433196967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5325181682480562160}
+  m_Layer: 0
+  m_Name: R_Hand Socket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5325181682480562160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79467283433196967}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000055751684, y: -0.7071068, z: -0.000000045059487, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.10199997, z: 0.029000033}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8713727218571348702}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5521357385006812663
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +148,7 @@ PrefabInstance:
     - target: {fileID: 3504074040544588521, guid: 9e43b9b73179dc24b9617021ca72808e, type: 3}
       propertyPath: _target
       value: 
-      objectReference: {fileID: 4222959173192748672}
+      objectReference: {fileID: 7814093234255392473}
     - target: {fileID: 6424072432955449063, guid: 9e43b9b73179dc24b9617021ca72808e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -290,6 +321,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6363ec5c93902644abd8dbab51a7b6df, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4324864010606507746}
+    - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: 6363ec5c93902644abd8dbab51a7b6df, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5325181682480562160}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6363ec5c93902644abd8dbab51a7b6df, type: 3}
       insertIndex: -1
@@ -300,9 +334,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6363ec5c93902644abd8dbab51a7b6df, type: 3}
       insertIndex: -1
       addedObject: {fileID: -8645908172741524555}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6363ec5c93902644abd8dbab51a7b6df, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4222959173192748672}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6363ec5c93902644abd8dbab51a7b6df, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7814093234255392473}
@@ -389,19 +420,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4222959173192748672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7897525559356278855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be4c66a309d5b4d42897cc79a9079732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 100
 --- !u!114 &7814093234255392473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +432,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c39a00341bdbb4788f5b51c9e15a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MovementSpeed: 0
+  weapon: {fileID: -5439517448021370219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+  _handSocket: {fileID: 5325181682480562160}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -424,3 +446,8 @@ MonoBehaviour:
   attackCooldown: 5
   sightRange: 10
   attackRange: 1
+--- !u!4 &8713727218571348702 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 6363ec5c93902644abd8dbab51a7b6df, type: 3}
+  m_PrefabInstance: {fileID: 7014581229591917846}
+  m_PrefabAsset: {fileID: 0}

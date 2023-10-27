@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour
     private Slider _easeHealthBar;
     
     [SerializeField]
-    private Enemy _target;
+    private Character _target;
     
     private float _targetHealth;
 

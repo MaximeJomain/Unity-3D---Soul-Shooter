@@ -1,15 +1,16 @@
-using JetBrains.Annotations;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
     public float Health;
+
+    [SerializeField]
+    private Weapon _weapon;
+
+    [SerializeField]
+    private Transform _handSocket;
     
     [NonSerialized]
     public float Speed;
@@ -27,6 +28,10 @@ public class Enemy : MonoBehaviour
     {
         IsAlive = true;
         Speed = 0f;
+
+        GameObject weaponInstance = Instantiate(_weapon.gameObject, _handSocket);
+        weaponInstance.transform.position = _handSocket.position;
+        weaponInstance.transform.rotation = _handSocket.rotation;
     }
 
     private void Update()

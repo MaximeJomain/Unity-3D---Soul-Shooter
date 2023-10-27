@@ -123,37 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &317288484
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 317288485}
-  m_Layer: 0
-  m_Name: Camera Follow Target
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &317288485
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317288484}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.65, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &419736291
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +159,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 317288485}
+  m_Follow: {fileID: 968523091}
   m_Lens:
     FieldOfView: 60.000004
     OrthographicSize: 5
@@ -512,6 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 7897525559356278855, guid: 6a71dd98139e4a54cb17c680dd1ef001, type: 3}
+  _spawnArea: {fileID: 541632117}
 --- !u!4 &654513280
 Transform:
   m_ObjectHideFlags: 0
@@ -521,7 +491,7 @@ Transform:
   m_GameObject: {fileID: 654513278}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: -8.49, y: 0, z: 35.6}
+  m_LocalPosition: {x: -8.49, y: 0, z: 49.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -886,6 +856,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &968523090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 968523091}
+  m_Layer: 0
+  m_Name: Camera Follow Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &968523091
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968523090}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1418046101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,18 +1316,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paladin Player
       objectReference: {fileID: 0}
-    - target: {fileID: 846911106351418745, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 846911106351418745, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1105488853231560846, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
+    - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
       propertyPath: followTransform
       value: 
-      objectReference: {fileID: 317288485}
+      objectReference: {fileID: 968523091}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1337,10 +1330,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 705507995}
-  - {fileID: 1682193172}
   - {fileID: 541632120}
+  - {fileID: 1682193172}
   - {fileID: 419736293}
-  - {fileID: 317288485}
+  - {fileID: 968523091}
   - {fileID: 5028120701141211954}
   - {fileID: 654513280}
   - {fileID: 660346386}

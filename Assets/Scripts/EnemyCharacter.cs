@@ -1,73 +1,81 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyCharacter : Character
 {
     [SerializeField]
     private LayerMask groundLayer, playerLayer;
-    
+
     private NavMeshAgent _agent;
 
     private Transform _player;
     
-    private Enemy _enemyController;
-
     private float _baseSpeed;
-    
+
     // Patrolling
     [SerializeField]
     private float walkPointRange;
     private Vector3 _walkPoint;
     private bool _walkPointSet;
-    
+
     // Attacking
     [SerializeField]
     private float attackCooldown;
     private bool _hasAttacked;
-    
+
     // Ranges
     [SerializeField]
     private float sightRange, attackRange;
     private bool _playerInSightRange, _playerInAttackRange;
-    
 
-    private void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         // TODO Automatic way to find Player
         _player = GameObject.Find("Paladin Player").transform;
 
         _agent = GetComponent<NavMeshAgent>();
-        _enemyController = GetComponent<Enemy>();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _baseSpeed = _agent.speed;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (_enemyController.IsAlive)
+        if (IsAlive)
         {
-            _enemyController.Speed = _agent.velocity.magnitude;
+            if (Health <= 0f)
+            {
+                Die();
+            }
             
+            MovementSpeed = _agent.velocity.magnitude;
+
             _playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
             _playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
-            if (!_playerInSightRange && !_playerInAttackRange) Patrol();
+            if (!_playerInSightRange && !_playerInAttackRange) ChasePlayer();
             if (_playerInSightRange && !_playerInAttackRange) ChasePlayer();
             if (_playerInSightRange && _playerInAttackRange) AttackPlayer();
         }
+    }
+    
+    protected override void Die()
+    {
+        base.Die();
+        Destroy(gameObject, 5f);
     }
 
     private void Patrol()
     {
         if (!_walkPointSet) SearchWalkPoint();
 
-        if (_walkPointSet) 
+        if (_walkPointSet)
             _agent.SetDestination(_walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - _walkPoint;
@@ -79,7 +87,7 @@ public class EnemyAI : MonoBehaviour
     private void SearchWalkPoint()
     {
         _agent.speed = _baseSpeed;
-        
+
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -94,17 +102,17 @@ public class EnemyAI : MonoBehaviour
         _agent.speed = _baseSpeed * 2f;
         _agent.SetDestination(_player.position);
     }
-    
+
     private void AttackPlayer()
     {
         _agent.SetDestination(transform.position);
-        
+
         transform.LookAt(_player);
 
         if (!_hasAttacked)
         {
-            _enemyController.Attack();
-            
+            Attack();
+
             _hasAttacked = true;
             Invoke(nameof(ResetAttack), attackCooldown);
         }
@@ -115,5 +123,4 @@ public class EnemyAI : MonoBehaviour
         _hasAttacked = false;
     }
 
-    
 }
