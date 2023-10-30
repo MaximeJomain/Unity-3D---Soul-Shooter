@@ -25,8 +25,8 @@ public class EnemySpawner : MonoBehaviour
             
             Bounds bounds = _spawnArea.bounds;
             float px = Random.Range(bounds.min.x, bounds.max.x);
-            float py = Random.Range(bounds.min.y, bounds.max.y);
-            Vector3 spawnPoint = new Vector3(px, py);
+            float pz = Random.Range(bounds.min.z, bounds.max.z);
+            Vector3 spawnPoint = new Vector3(px, 0f, pz);
             
             GameObject enemy = Instantiate(_enemyPrefab, transform);
             enemy.transform.position = spawnPoint;

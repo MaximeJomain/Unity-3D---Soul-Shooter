@@ -42,22 +42,21 @@ public class EnemyCharacter : Character
     protected override void Start()
     {
         base.Start();
-        _baseSpeed = _agent.speed;
+        _agent.speed = MovementSpeed;
     }
 
     protected override void Update()
     {
         if (IsAlive)
         {
-            _animator.SetFloat("speed", MovementSpeed);
+            float actualSpeed = _agent.velocity.magnitude;
+            _animator.SetFloat("Speed", actualSpeed);
             
             if (Health <= 0f)
             {
                 Die();
             }
             
-            MovementSpeed = _agent.velocity.magnitude;
-
             _playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
             _playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
@@ -88,7 +87,7 @@ public class EnemyCharacter : Character
 
     private void SearchWalkPoint()
     {
-        _agent.speed = _baseSpeed;
+        _agent.speed = MovementSpeed;
 
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
@@ -101,7 +100,7 @@ public class EnemyCharacter : Character
 
     private void ChasePlayer()
     {
-        _agent.speed = _baseSpeed * 2f;
+        _agent.speed = MovementSpeed * 2f;
         _agent.SetDestination(_player.position);
     }
 

@@ -9,6 +9,7 @@ public enum ActionState
 {
     Unoccupied,
     IsAttacking,
+    IsDodging,
 }
 
 public class Character : MonoBehaviour
@@ -26,6 +27,8 @@ public class Character : MonoBehaviour
     private Transform _handSocket;
 
     protected bool IsAlive { get; private set; }
+    
+    protected bool _isInvincible = false;
     
     protected Rigidbody _rigidbody;
     
@@ -69,7 +72,7 @@ public class Character : MonoBehaviour
 
     protected void Attack()
     {
-        _animator.SetTrigger("attack");
+        _animator.SetTrigger("Attack");
     }
     
     public void AttackStart()
@@ -89,12 +92,13 @@ public class Character : MonoBehaviour
     
     public void TakeDamage(float damage)
     {
+        if (_isInvincible) return;
         Health -= damage;
     }
 
     protected virtual void Die()
     {
         IsAlive = false;
-        _animator.SetTrigger("death");
+        _animator.SetTrigger("Death");
     }
 }
