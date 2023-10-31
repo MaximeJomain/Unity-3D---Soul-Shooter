@@ -22,19 +22,19 @@ public class PlayerCharacter : Character
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
-        
+
         GameObject weaponInstance = Instantiate(weapon.gameObject, _handSocket);
         weaponInstance.transform.position = _handSocket.position;
-        
+
         _characterState = CharacterState.Equipped_Riffle;
-        
+
         _followTransform = GameObject.Find("Camera Follow Target").transform;
     }
 
     protected override void Update()
     {
         if (!IsAlive) return;
-        
+
         if (Health <= 0f)
         {
             Die();
@@ -73,7 +73,7 @@ public class PlayerCharacter : Character
     private void HandleMovement()
     {
         if (_actionState == ActionState.IsAttacking) return;
-        
+
         if (_move != Vector2.zero)
         {
             Quaternion targetRotation = Quaternion.Euler(0f, _followTransform.rotation.eulerAngles.y, 0f);
@@ -101,12 +101,17 @@ public class PlayerCharacter : Character
 
     private void OnFire()
     {
-        if (_characterState == CharacterState.Equipped_OneHanded
-            && _actionState == ActionState.Unoccupied)
+        if (_actionState != ActionState.Unoccupied) return;
+
+        if (_characterState == CharacterState.Equipped_OneHanded)
         {
             _actionState = ActionState.IsAttacking;
             int randomAttack = Random.Range(1, 2);
             _animator.SetTrigger("Attack" + randomAttack);
+        }
+        else if (_characterState == CharacterState.Equipped_Riffle)
+        {
+            _animator.SetTrigger("Shoot");
         }
     }
 
