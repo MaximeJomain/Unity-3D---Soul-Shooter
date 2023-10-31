@@ -2043,8 +2043,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846911106351418745}
   serializedVersion: 4
-  m_Mass: 2
-  m_Drag: 2
+  m_Mass: 1
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -2106,11 +2106,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 200
   MovementSpeed: 3
-  weapon: {fileID: -5439517448021370219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+  weapon: {fileID: -7437861577423181441, guid: 129c274d5e06ad1429feff9e14d58fcc, type: 3}
   _handSocket: {fileID: 5248531424129197382}
   cameraSensitivity: 3
   rotationSpeed: 10
-  followTransform: {fileID: 0}
 --- !u!4 &2212411122522132448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: ee7c2bc5242e75942b99b2c6117dce83, type: 3}

@@ -307,7 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MovementSpeed: 1
-  weapon: {fileID: -5439517448021370219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+  weapon: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
   _handSocket: {fileID: 7836640868065553428}
   groundLayer:
     serializedVersion: 2
