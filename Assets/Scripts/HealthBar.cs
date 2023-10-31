@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -17,14 +18,18 @@ public class HealthBar : MonoBehaviour
     [SerializeField]
     private bool _isFacingPlayer;
     
-    private float _targetHealth;
-
     private Transform _playerCamera;
 
 
     private void Awake()
     {
         _playerCamera = Camera.main!.transform;
+    }
+
+    private void Start()
+    {
+        _healthBar.maxValue = _target.Health;
+        _easeHealthBar.maxValue = _target.Health;
     }
 
     private void Update()

@@ -59,7 +59,7 @@ public class PlayerCharacter : Character
 
     private void HandleMovement()
     {
-        if (_actionState != ActionState.Unoccupied) return;
+        if (_actionState == ActionState.IsAttacking) return;
         
         if (_move != Vector2.zero)
         {

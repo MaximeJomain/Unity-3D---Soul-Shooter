@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 1876768061}
+    - target: {fileID: 3504074040544588521, guid: 7c29205931b37f14fbfead2a0431c3d4, type: 3}
+      propertyPath: _isFacingPlayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6424072432955449063, guid: 7c29205931b37f14fbfead2a0431c3d4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1054,6 +1058,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paladin Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4314213446795552619, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
+      propertyPath: m_Center.y
+      value: 0.9213225
+      objectReference: {fileID: 0}
     - target: {fileID: 7977624645527957693, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
       propertyPath: m_Drag
       value: 1
@@ -1061,6 +1069,10 @@ PrefabInstance:
     - target: {fileID: 7977624645527957693, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
       propertyPath: m_Mass
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
+      propertyPath: Health
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
       propertyPath: followTransform
