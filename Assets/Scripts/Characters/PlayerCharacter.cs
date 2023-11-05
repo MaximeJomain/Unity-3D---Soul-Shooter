@@ -5,35 +5,45 @@ using Random = UnityEngine.Random;
 
 public class PlayerCharacter : Character
 {
+    // MOVEMENT
     [SerializeField]
     private float cameraSensitivity = 3f;
-
     [SerializeField]
     private float rotationSpeed = 5f;
-
     private Transform _followTransform;
-
     private Vector2 _move;
-
     private Vector2 _look;
+    private float _movementSpeed;
+
+    // SWORD COMBO
+    private float _attackCombo = 1;
+    private float _maxCombo = 3;
+    private float _comboTimeFrame = 1;
+    private float _comboElapsedTime;
 
 
     protected override void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
-
-        GameObject weaponInstance = Instantiate(weapon.gameObject, _handSocket);
-        weaponInstance.transform.position = _handSocket.position;
-
-        _characterState = CharacterState.Equipped_Riffle;
+        base.Awake();
 
         _followTransform = GameObject.Find("Camera Follow Target").transform;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        _animator.SetInteger("characterState", (int)CharacterState);
+        _movementSpeed = MovementSpeed;
     }
 
     protected override void Update()
     {
         if (!IsAlive) return;
+
+        if (_actionState != ActionState.IsAttacking)
+        {
+            _comboElapsedTime += Time.deltaTime;
+        }
 
         if (Health <= 0f)
         {
@@ -72,14 +82,17 @@ public class PlayerCharacter : Character
 
     private void HandleMovement()
     {
-        if (_actionState == ActionState.IsAttacking) return;
+        if (_actionState == ActionState.IsAttacking)
+            _movementSpeed = MovementSpeed * 0.3f;
+        else
+            _movementSpeed = MovementSpeed;
 
         if (_move != Vector2.zero)
         {
             Quaternion targetRotation = Quaternion.Euler(0f, _followTransform.rotation.eulerAngles.y, 0f);
 
             Vector3 moveDirection = targetRotation * new Vector3(_move.x, 0f, _move.y);
-            _rigidbody.velocity = moveDirection * MovementSpeed;
+            _rigidbody.velocity = moveDirection * _movementSpeed;
 
             Quaternion lookRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
@@ -101,15 +114,33 @@ public class PlayerCharacter : Character
 
     private void OnFire()
     {
-        if (_actionState != ActionState.Unoccupied) return;
+        if (_actionState != ActionState.Unoccupied)
+            return;
 
-        if (_characterState == CharacterState.Equipped_OneHanded)
+        // ONE-HANDED SWORD
+        if (CharacterState == CharacterState.Equipped_OneHanded)
         {
             _actionState = ActionState.IsAttacking;
-            int randomAttack = Random.Range(1, 2);
-            _animator.SetTrigger("Attack" + randomAttack);
+
+            if (_comboElapsedTime > _comboTimeFrame)
+            {
+                _attackCombo = 1;
+            }
+
+            _comboElapsedTime = 0;
+
+            _animator.SetTrigger("Attack" + _attackCombo);
+
+            _attackCombo++;
+
+            if (_attackCombo > _maxCombo)
+            {
+                _attackCombo = 1;
+            }
         }
-        else if (_characterState == CharacterState.Equipped_Riffle)
+
+        // RIFLE
+        else if (CharacterState == CharacterState.Equipped_Rifle)
         {
             _animator.SetTrigger("Shoot");
         }

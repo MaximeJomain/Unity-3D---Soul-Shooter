@@ -308,7 +308,8 @@ MonoBehaviour:
   Health: 100
   MovementSpeed: 1
   weapon: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
-  _handSocket: {fileID: 7836640868065553428}
+  HandSocket: {fileID: 7836640868065553428}
+  CharacterState: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

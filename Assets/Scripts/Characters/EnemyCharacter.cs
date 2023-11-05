@@ -6,11 +6,8 @@ public class EnemyCharacter : Character
 {
     [SerializeField]
     private LayerMask groundLayer, playerLayer;
-
     private NavMeshAgent _agent;
-
     private Transform _player;
-    
     private float _baseSpeed;
 
     // Patrolling

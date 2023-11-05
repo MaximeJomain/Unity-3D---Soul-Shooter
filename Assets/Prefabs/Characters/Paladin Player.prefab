@@ -2105,9 +2105,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 200
-  MovementSpeed: 3
-  weapon: {fileID: -7437861577423181441, guid: 129c274d5e06ad1429feff9e14d58fcc, type: 3}
-  _handSocket: {fileID: 5248531424129197382}
+  MovementSpeed: 5
+  weapon: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+  HandSocket: {fileID: 5248531424129197382}
+  CharacterState: 0
   cameraSensitivity: 3
   rotationSpeed: 10
 --- !u!4 &2212411122522132448 stripped

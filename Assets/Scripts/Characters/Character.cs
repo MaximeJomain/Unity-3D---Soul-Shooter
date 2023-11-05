@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum CharacterState
 {
     Unequipped,
     Equipped_OneHanded,
-    Equipped_Riffle,
+    Equipped_Rifle,
 }
 
 public enum ActionState
@@ -25,7 +26,7 @@ public class Character : MonoBehaviour {
     protected Weapon weapon;
     
     [SerializeField]
-    protected Transform _handSocket;
+    public Transform HandSocket;
 
     protected bool IsAlive { get; private set; }
     
@@ -35,7 +36,8 @@ public class Character : MonoBehaviour {
     
     protected Animator _animator;
 
-    protected CharacterState _characterState = CharacterState.Unequipped;
+    [HideInInspector]
+    public CharacterState CharacterState = CharacterState.Unequipped;
 
     protected ActionState _actionState = ActionState.Unoccupied;
 
@@ -46,12 +48,9 @@ public class Character : MonoBehaviour {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         
-        GameObject weaponInstance = Instantiate(weapon.gameObject, _handSocket);
-        weaponInstance.transform.position = _handSocket.position;
-        weaponInstance.transform.rotation = _handSocket.rotation;
+        GameObject weaponInstance = Instantiate(weapon.gameObject, HandSocket);
+        weaponInstance.GetComponent<Weapon>().Equip(this);
         
-        // TODO Remove with equipping weapon action
-        _characterState = CharacterState.Equipped_OneHanded;
         _weaponAttackCollider = weaponInstance.GetComponent<Collider>();
     }
 

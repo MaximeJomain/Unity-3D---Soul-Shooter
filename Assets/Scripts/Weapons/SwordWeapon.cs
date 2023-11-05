@@ -16,6 +16,13 @@ public class SwordWeapon : Weapon
         _attackCollider.enabled = false;
     }
 
+    public override void Equip(Character character)
+    {
+        base.Equip(character);
+
+        character.CharacterState = CharacterState.Equipped_OneHanded;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Character target = other.GetComponent<Character>();
