@@ -317,7 +317,7 @@ Transform:
   m_GameObject: {fileID: 419736291}
   serializedVersion: 2
   m_LocalRotation: {x: -0.22935857, y: -0.027220996, z: -0.0064170123, w: 0.97294015}
-  m_LocalPosition: {x: 1, y: 1.65, z: -2}
+  m_LocalPosition: {x: 1, y: 1.65, z: -1.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -446,7 +446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &654513279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -736,7 +736,7 @@ Transform:
   m_GameObject: {fileID: 1682193171}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.65, z: -2}
+  m_LocalPosition: {x: 1, y: 1.65, z: -1.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -885,7 +885,7 @@ MonoBehaviour:
   ShoulderOffset: {x: 1, y: -0.4, z: 0}
   VerticalArmLength: 0.4
   CameraSide: 1
-  CameraDistance: 2
+  CameraDistance: 1.7
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0
@@ -1061,7 +1061,11 @@ PrefabInstance:
     - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
       propertyPath: weapon
       value: 
-      objectReference: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+      objectReference: {fileID: -7437861577423181441, guid: 129c274d5e06ad1429feff9e14d58fcc, type: 3}
+    - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
+      propertyPath: weaponPrefab
+      value: 
+      objectReference: {fileID: -7437861577423181441, guid: 129c274d5e06ad1429feff9e14d58fcc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

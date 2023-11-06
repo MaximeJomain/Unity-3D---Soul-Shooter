@@ -2105,7 +2105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 200
-  MovementSpeed: 5
+  MovementSpeed: 4
   weapon: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
   HandSocket: {fileID: 5248531424129197382}
   CharacterState: 0

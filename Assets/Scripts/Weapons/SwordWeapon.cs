@@ -20,7 +20,7 @@ public class SwordWeapon : Weapon
     {
         base.Equip(character);
 
-        character.CharacterState = CharacterState.Equipped_OneHanded;
+        character.characterState = CharacterState.Equipped_OneHanded;
     }
 
     private void OnTriggerEnter(Collider other)
