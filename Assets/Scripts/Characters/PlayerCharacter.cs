@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -18,9 +19,8 @@ public class PlayerCharacter : Character
     // SWORD COMBO
     private float _attackCombo = 1;
     private float _maxCombo = 3;
-    private float _comboTimeFrame = 1;
+    private float _comboTimeFrame = 0.7f;
     private float _comboElapsedTime;
-
 
     protected override void Awake()
     {
@@ -32,7 +32,7 @@ public class PlayerCharacter : Character
     protected override void Start()
     {
         base.Start();
-        _animator.SetInteger("characterState", (int)CharacterState);
+        _animator.SetInteger("characterState", (int)characterState);
         _movementSpeed = MovementSpeed;
     }
 
@@ -118,7 +118,7 @@ public class PlayerCharacter : Character
             return;
 
         // ONE-HANDED SWORD
-        if (CharacterState == CharacterState.Equipped_OneHanded)
+        if (characterState == CharacterState.Equipped_OneHanded)
         {
             _actionState = ActionState.IsAttacking;
 
@@ -140,9 +140,14 @@ public class PlayerCharacter : Character
         }
 
         // RIFLE
-        else if (CharacterState == CharacterState.Equipped_Rifle)
+        else if (characterState == CharacterState.Equipped_Rifle)
         {
-            _animator.SetTrigger("Shoot");
+            RifleWeapon rifle = _weapon.GetComponent<RifleWeapon>();
+            if (rifle)
+            {
+                rifle.Shoot();
+                _animator.SetTrigger("Shoot");
+            }
         }
     }
 

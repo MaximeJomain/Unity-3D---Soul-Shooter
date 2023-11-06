@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,11 +23,16 @@ public class Character : MonoBehaviour {
     [SerializeField]
     public float MovementSpeed;
     
+    [FormerlySerializedAs("weapon")]
     [SerializeField]
-    protected Weapon weapon;
+    protected Weapon weaponPrefab;
     
     [SerializeField]
     public Transform HandSocket;
+
+    [SerializeField]
+    [CanBeNull]
+    public Transform RifleHandSocket;
 
     protected bool IsAlive { get; private set; }
     
@@ -36,8 +42,10 @@ public class Character : MonoBehaviour {
     
     protected Animator _animator;
 
+    protected GameObject _weapon;
+
     [HideInInspector]
-    public CharacterState CharacterState = CharacterState.Unequipped;
+    public CharacterState characterState = CharacterState.Unequipped;
 
     protected ActionState _actionState = ActionState.Unoccupied;
 
@@ -48,10 +56,10 @@ public class Character : MonoBehaviour {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         
-        GameObject weaponInstance = Instantiate(weapon.gameObject, HandSocket);
-        weaponInstance.GetComponent<Weapon>().Equip(this);
+        _weapon = Instantiate(weaponPrefab.gameObject, HandSocket);
+        _weapon.GetComponent<Weapon>().Equip(this);
         
-        _weaponAttackCollider = weaponInstance.GetComponent<Collider>();
+        _weaponAttackCollider = _weapon.GetComponent<Collider>();
     }
 
     protected virtual void Start()
