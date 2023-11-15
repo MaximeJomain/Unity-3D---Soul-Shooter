@@ -1,12 +1,15 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class Weapon : MonoBehaviour
 {
+    [FormerlySerializedAs("damage")]
+    [FormerlySerializedAs("_damage")]
     [SerializeField]
-    protected float _damage;
+    public float Damage;
 
     public virtual void Equip(Character character)
     {

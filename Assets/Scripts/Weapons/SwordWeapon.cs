@@ -28,7 +28,7 @@ public class SwordWeapon : Weapon
         Character target = other.GetComponent<Character>();
         if (target)
         {
-            target.TakeDamage(_damage);
+            target.TakeDamage(Damage);
         }
         
     }
