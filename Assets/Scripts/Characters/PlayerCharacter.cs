@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public class PlayerCharacter : Character
 {
+    private CharacterActions _characterActions;
+    
     // MOVEMENT
     [SerializeField]
     private float cameraSensitivity = 3f;
@@ -25,15 +27,30 @@ public class PlayerCharacter : Character
     protected override void Awake()
     {
         base.Awake();
-
+        
         _followTransform = GameObject.Find("Camera Follow Target").transform;
     }
 
     protected override void Start()
     {
         base.Start();
+        
         _animator.SetInteger("characterState", (int)characterState);
         _movementSpeed = MovementSpeed;
+    }
+    
+    private void OnEnable()
+    {
+        if (_characterActions == null)
+        {
+            _characterActions = new CharacterActions();
+
+            _characterActions.Player.Move.performed += input => _move = input.ReadValue<Vector2>();
+            _characterActions.Player.Look.performed += input => _look = input.ReadValue<Vector2>();
+            _characterActions.Player.Fire.performed += _ => Fire();
+        }
+        
+        _characterActions.Enable();
     }
 
     protected override void Update()
@@ -54,7 +71,7 @@ public class PlayerCharacter : Character
 
         HandleMovement();
     }
-
+    
     private void HandleCamera()
     {
         _followTransform.position = new Vector3(transform.position.x, _followTransform.position.y, transform.position.z);
@@ -112,7 +129,7 @@ public class PlayerCharacter : Character
         _look = value.Get<Vector2>();
     }
 
-    private void OnFire()
+    private void Fire()
     {
         if (_actionState != ActionState.Unoccupied)
             return;

@@ -1058,14 +1058,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paladin Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
-      propertyPath: weapon
-      value: 
-      objectReference: {fileID: -7437861577423181441, guid: 129c274d5e06ad1429feff9e14d58fcc, type: 3}
-    - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
-      propertyPath: weaponPrefab
-      value: 
-      objectReference: {fileID: -7437861577423181441, guid: 129c274d5e06ad1429feff9e14d58fcc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
