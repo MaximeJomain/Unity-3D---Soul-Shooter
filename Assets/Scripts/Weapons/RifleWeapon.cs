@@ -14,9 +14,7 @@ public class RifleWeapon : Weapon
 
     [SerializeField]
     private float shotVelocity;
-
-    private Transform _playerTransform;
-
+    
     public override void Equip(Character character)
     {
         if (character.RifleHandSocket)
@@ -24,15 +22,13 @@ public class RifleWeapon : Weapon
             transform.position = character.RifleHandSocket.position;
             transform.rotation = character.RifleHandSocket.rotation;
             character.characterState = CharacterState.Equipped_Rifle;
-            _playerTransform = character.transform;
         }
     }
 
-    public void Shoot()
+    public void Shoot(Vector3 mouseWorldPosition)
     {
-        var bullet = Instantiate(bulletPrefab, canon.position, _playerTransform.rotation);
+        Vector3 aimDirection = (mouseWorldPosition - canon.position).normalized;
+        var bullet = Instantiate(bulletPrefab, canon.position, Quaternion.LookRotation(aimDirection, Vector3.up));
         bullet.SetDamage(Damage);
-        
-        bullet.GetComponent<Rigidbody>().AddForce(_playerTransform.forward * shotVelocity, ForceMode.Impulse);
     }
 }

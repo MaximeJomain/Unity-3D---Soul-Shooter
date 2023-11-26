@@ -307,9 +307,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MovementSpeed: 1
-  weapon: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+  weaponPrefab: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
   HandSocket: {fileID: 7836640868065553428}
-  CharacterState: 0
+  RifleHandSocket: {fileID: 0}
+  characterState: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

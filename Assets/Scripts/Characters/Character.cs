@@ -17,13 +17,15 @@ public enum ActionState
 }
 
 public class Character : MonoBehaviour {
+
+    #region Class Fields
+    
     [SerializeField]
     public float Health;
     
     [SerializeField]
     public float MovementSpeed;
     
-    [FormerlySerializedAs("weapon")]
     [SerializeField]
     protected Weapon weaponPrefab;
     
@@ -33,33 +35,30 @@ public class Character : MonoBehaviour {
     [SerializeField]
     [CanBeNull]
     public Transform RifleHandSocket;
-
-    protected bool IsAlive { get; private set; }
     
-    protected bool _isInvincible = false;
-    
-    protected Rigidbody _rigidbody;
-    
-    protected Animator _animator;
-
-    protected GameObject _weapon;
-
     [HideInInspector]
     public CharacterState characterState = CharacterState.Unequipped;
 
+    protected bool IsAlive { get; private set; }
+    protected bool _isInvincible = false;
+    protected Rigidbody _rigidbody;
+    protected Animator _animator;
+    protected Weapon _weapon;
     protected ActionState _actionState = ActionState.Unoccupied;
-
     private Collider _weaponAttackCollider;
+    
+    #endregion
     
     protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         
-        _weapon = Instantiate(weaponPrefab.gameObject, HandSocket);
-        _weapon.GetComponent<Weapon>().Equip(this);
+        GameObject weaponInstance = Instantiate(weaponPrefab.gameObject, HandSocket);
+        _weapon = weaponInstance.GetComponent<Weapon>();
+        _weaponAttackCollider = weaponInstance.GetComponent<Collider>();
         
-        _weaponAttackCollider = _weapon.GetComponent<Collider>();
+        _weapon.Equip(this);
     }
 
     protected virtual void Start()

@@ -6,18 +6,24 @@ using Random = UnityEngine.Random;
 
 public class PlayerCharacter : Character
 {
+    #region Class Fields
+
+    [SerializeField]
+    private Transform _debugSphere;
+    [SerializeField]
+    private LayerMask _debugLayerMask;
+    
     private CharacterActions _characterActions;
     private bool _isFiring;
     private bool _isAiming;
+    private bool _hasAttacked;
 
     private Camera _mainCamera;
     private GameObject _moveCamera;
     private GameObject _aimCamera;
 
-    [SerializeField]
-    private LayerMask aimColliderMask;
-    [SerializeField]
-    private Transform debugSphere;
+    private RifleWeapon _rifleWeapon;
+    private Vector3 _mouseWorldPosition;
     
     // MOVEMENT
     [SerializeField]
@@ -36,6 +42,8 @@ public class PlayerCharacter : Character
     private float _maxCombo = 3;
     private float _comboTimeFrame = 0.7f;
     private float _comboElapsedTime;
+    
+    #endregion
 
     protected override void Awake()
     {
@@ -74,32 +82,19 @@ public class PlayerCharacter : Character
         _characterActions.Enable();
     }
 
-    private void FixedUpdate()
-    {
-        if (_isFiring)
-        {
-            Fire();
-        }
-    }
-
     protected override void Update()
     {
         if (!IsAlive) return;
 
-        if (_actionState != ActionState.IsAttacking 
-            && characterState == CharacterState.Equipped_OneHanded)
-        {
+        if (_actionState != ActionState.IsAttacking && characterState == CharacterState.Equipped_OneHanded)
             _comboElapsedTime += Time.deltaTime;
-        }
-
-        if (Health <= 0f)
-        {
-            Die();
-        }
+        
+        if (Health <= 0f) Die();
         
         HandleCamera();
         HandleMovement();
         HandleAim();
+        HandleAttack();
     }
     
     private void HandleCamera()
@@ -141,8 +136,12 @@ public class PlayerCharacter : Character
             Vector3 moveDirection = targetRotation * new Vector3(_move.x, 0f, _move.y);
             _rigidbody.velocity = moveDirection * _movementSpeed;
 
-            Quaternion lookRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+            if (!_isAiming)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(moveDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            }
         }
 
         Vector2 movement = new Vector2(Mathf.Abs(_move.x), Math.Abs(_move.y));
@@ -151,6 +150,16 @@ public class PlayerCharacter : Character
     
     private void HandleAim()
     {
+        _mouseWorldPosition = Vector3.zero;
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+        Ray ray = _mainCamera.ScreenPointToRay(screenCenterPoint);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f))
+        {
+            _debugSphere.position = raycastHit.point;
+            _mouseWorldPosition = raycastHit.point;
+        }
+        
         if (_isAiming)
         {
             if (!_aimCamera.activeInHierarchy)
@@ -159,9 +168,12 @@ public class PlayerCharacter : Character
                 _aimCamera.SetActive(true);
             }
             _sensitivity = aimSensitivity;
+
+            Vector3 aimTarget = _mouseWorldPosition;
+            aimTarget.y = transform.position.y;
+            Vector3 aimDirection = (aimTarget - transform.position).normalized;
             
-            Quaternion targetRotation = Quaternion.Euler(0f, _followTransform.eulerAngles.y, 0f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 20f);
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
         }
         else if (!_isAiming)
         {
@@ -174,45 +186,65 @@ public class PlayerCharacter : Character
         }
     }
     
-    private void Fire()
+    private void HandleAttack()
     {
-        if (_actionState != ActionState.Unoccupied)
-            return;
-
-        // ONE-HANDED SWORD
+        if (_actionState != ActionState.Unoccupied) return;
+        
+        // SWORD
         if (characterState == CharacterState.Equipped_OneHanded)
         {
-            _actionState = ActionState.IsAttacking;
-
-            if (_comboElapsedTime > _comboTimeFrame)
+            if (!_isFiring)
+                _hasAttacked = false;
+            
+            if (_isFiring && !_hasAttacked)
             {
-                _attackCombo = 1;
-            }
-
-            _comboElapsedTime = 0;
-
-            _animator.SetTrigger("Attack" + _attackCombo);
-
-            _attackCombo++;
-
-            if (_attackCombo > _maxCombo)
-            {
-                _attackCombo = 1;
+                _hasAttacked = true;
+                AttackWithSword();
             }
         }
-
+        
         // RIFLE
         else if (characterState == CharacterState.Equipped_Rifle)
         {
-            RifleWeapon rifle = _weapon.GetComponent<RifleWeapon>();
-            if (rifle)
+            if (!_rifleWeapon)
             {
-                rifle.Shoot();
-                _animator.SetTrigger("Shoot");
+                _rifleWeapon = _weapon.GetComponent<RifleWeapon>();
             }
+            
+            if (_isFiring) ShootRifle();
         }
     }
 
+    private void AttackWithSword()
+    {
+        _actionState = ActionState.IsAttacking;
+
+        if (_comboElapsedTime > _comboTimeFrame)
+        {
+            _attackCombo = 1;
+        }
+
+        _comboElapsedTime = 0;
+
+        _animator.SetTrigger("Attack" + _attackCombo);
+
+        _attackCombo++;
+
+        if (_attackCombo > _maxCombo)
+        {
+            _attackCombo = 1;
+        }
+    }
+
+    private void ShootRifle()
+    {
+        if (_rifleWeapon)
+        {
+            _rifleWeapon.Shoot(_mouseWorldPosition);
+            _animator.SetTrigger("Shoot");
+        }
+    }
+    
     private void OnDodge()
     {
         if (_actionState == ActionState.Unoccupied)

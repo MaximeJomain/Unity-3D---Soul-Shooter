@@ -6,25 +6,23 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private float _damage;
-
     private bool _hasHit;
+    private Rigidbody _rigidbody;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
 
     private void Start()
     {
-        _hasHit = false;
+        float speed = 10f;
+        _rigidbody.velocity = transform.forward * speed;
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!_hasHit)
-        {
-            Character enemy = other.gameObject.GetComponent<Character>();
-            if (enemy)
-            {
-                enemy.TakeDamage(_damage);
-                _hasHit = true;
-            }
-        }
+        Destroy(gameObject);
     }
 
     public void SetDamage(float damage)
