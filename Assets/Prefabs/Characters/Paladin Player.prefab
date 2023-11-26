@@ -1210,6 +1210,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ee7c2bc5242e75942b99b2c6117dce83, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1092408308860062549, guid: ee7c2bc5242e75942b99b2c6117dce83, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.000000005120256
@@ -2111,7 +2115,11 @@ MonoBehaviour:
   HandSocket: {fileID: 5248531424129197382}
   RifleHandSocket: {fileID: 1162920297671326743}
   characterState: 0
+  aimColliderMask:
+    serializedVersion: 2
+    m_Bits: 1
   cameraSensitivity: 3
+  aimSensitivity: 1
   rotationSpeed: 10
 --- !u!4 &2212411122522132448 stripped
 Transform:
