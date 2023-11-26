@@ -17,8 +17,7 @@ public class EnemyCharacter : Character
     private bool _walkPointSet;
 
     // Attacking
-    [SerializeField]
-    private float attackCooldown;
+    private const float attackCooldown = 3f;
     private bool _hasAttacked;
 
     // Ranges
@@ -30,7 +29,6 @@ public class EnemyCharacter : Character
     protected override void Awake()
     {
         base.Awake();
-        // TODO Automatic way to find Player
         _player = GameObject.Find("Paladin Player").transform;
 
         _agent = GetComponent<NavMeshAgent>();
@@ -46,6 +44,15 @@ public class EnemyCharacter : Character
     {
         if (IsAlive)
         {
+            if (_actionState == ActionState.IsAttacking)
+            {
+                _agent.speed = MovementSpeed * 0.1f;
+            }
+            else
+            {
+                _agent.speed = MovementSpeed * 2f;
+            }
+            
             float actualSpeed = _agent.velocity.magnitude;
             _animator.SetFloat("Speed", actualSpeed);
             
@@ -60,6 +67,10 @@ public class EnemyCharacter : Character
             if (!_playerInSightRange && !_playerInAttackRange) ChasePlayer();
             if (_playerInSightRange && !_playerInAttackRange) ChasePlayer();
             if (_playerInSightRange && _playerInAttackRange) AttackPlayer();
+        }
+        else if (!IsAlive)
+        {
+            _agent.velocity = Vector3.zero;
         }
     }
     
@@ -97,14 +108,11 @@ public class EnemyCharacter : Character
 
     private void ChasePlayer()
     {
-        _agent.speed = MovementSpeed * 2f;
         _agent.SetDestination(_player.position);
     }
 
     private void AttackPlayer()
     {
-        _agent.SetDestination(transform.position);
-
         transform.LookAt(_player);
 
         if (!_hasAttacked)

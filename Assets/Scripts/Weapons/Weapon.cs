@@ -6,8 +6,6 @@ using UnityEngine.Serialization;
 
 public class Weapon : MonoBehaviour
 {
-    [FormerlySerializedAs("damage")]
-    [FormerlySerializedAs("_damage")]
     [SerializeField]
     public float Damage;
 

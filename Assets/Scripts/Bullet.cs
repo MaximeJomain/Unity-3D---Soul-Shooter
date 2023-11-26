@@ -16,17 +16,23 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        float speed = 10f;
+        float speed = 40f;
         _rigidbody.velocity = transform.forward * speed;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        EnemyCharacter enemyHit = other.GetComponent<EnemyCharacter>();
+        if (enemyHit)
+        {
+            enemyHit.TakeDamage(_damage);
+        }
+        
         Destroy(gameObject);
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(float newDamage)
     {
-        _damage = damage;
+        _damage = newDamage;
     }
 }

@@ -46,6 +46,7 @@ public class Character : MonoBehaviour {
     protected Weapon _weapon;
     protected ActionState _actionState = ActionState.Unoccupied;
     private Collider _weaponAttackCollider;
+    private CapsuleCollider _characterCollider;
     
     #endregion
     
@@ -53,6 +54,7 @@ public class Character : MonoBehaviour {
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+        _characterCollider = GetComponent<CapsuleCollider>();
         
         GameObject weaponInstance = Instantiate(weaponPrefab.gameObject, HandSocket);
         _weapon = weaponInstance.GetComponent<Weapon>();
@@ -77,7 +79,7 @@ public class Character : MonoBehaviour {
         }
     }
 
-    protected void Attack()
+    protected virtual void Attack()
     {
         _animator.SetTrigger("Attack");
     }
@@ -106,6 +108,8 @@ public class Character : MonoBehaviour {
     protected virtual void Die()
     {
         IsAlive = false;
+        _rigidbody.velocity = Vector3.zero;
+        Destroy(_characterCollider);
         _animator.SetTrigger("Death");
     }
 }

@@ -735,7 +735,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &654513279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1843,7 +1843,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062113504}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1965,6 +1965,10 @@ PrefabInstance:
       propertyPath: weaponPrefab
       value: 
       objectReference: {fileID: -7437861577423181441, guid: 129c274d5e06ad1429feff9e14d58fcc, type: 3}
+    - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
+      propertyPath: MovementSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8925665382779137001, guid: 9a4f1aa9633cc0b46b2eb5f68f998e86, type: 3}
       propertyPath: _debugLayerMask.m_Bits
       value: 1

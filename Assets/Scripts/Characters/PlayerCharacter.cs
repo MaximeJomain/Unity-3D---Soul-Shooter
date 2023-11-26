@@ -168,6 +168,7 @@ public class PlayerCharacter : Character
                 _aimCamera.SetActive(true);
             }
             _sensitivity = aimSensitivity;
+            _animator.SetBool("IsAiming", true);
 
             Vector3 aimTarget = _mouseWorldPosition;
             aimTarget.y = transform.position.y;
@@ -183,6 +184,7 @@ public class PlayerCharacter : Character
                 _aimCamera.SetActive(false);
             }
             _sensitivity = cameraSensitivity;
+            _animator.SetBool("IsAiming", false);
         }
     }
     
