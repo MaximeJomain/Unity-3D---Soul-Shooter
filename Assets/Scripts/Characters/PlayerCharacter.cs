@@ -124,7 +124,7 @@ public class PlayerCharacter : Character
     
     private void HandleMovement()
     {
-        if (_actionState == ActionState.IsAttacking)
+        if (_actionState != ActionState.Unoccupied)
             _movementSpeed = MovementSpeed * 0.3f;
         else
             _movementSpeed = MovementSpeed;
@@ -150,6 +150,8 @@ public class PlayerCharacter : Character
     
     private void HandleAim()
     {
+        if (characterState != CharacterState.Equipped_Rifle) return;
+        
         _mouseWorldPosition = Vector3.zero;
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
@@ -213,7 +215,10 @@ public class PlayerCharacter : Character
                 _rifleWeapon = _weapon.GetComponent<RifleWeapon>();
             }
             
-            if (_isFiring) ShootRifle();
+            if (_isFiring && _isAiming) 
+                ShootRifle();
+            else 
+                _animator.SetBool("IsShooting", false);
         }
     }
 
@@ -243,7 +248,7 @@ public class PlayerCharacter : Character
         if (_rifleWeapon)
         {
             _rifleWeapon.Shoot(_mouseWorldPosition);
-            _animator.SetTrigger("Shoot");
+            _animator.SetBool("IsShooting", true);
         }
     }
     

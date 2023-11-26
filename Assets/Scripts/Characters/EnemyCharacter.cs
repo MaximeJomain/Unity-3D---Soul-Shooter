@@ -4,6 +4,10 @@ using Random = UnityEngine.Random;
 
 public class EnemyCharacter : Character
 {
+    #region Fields
+    
+    private EnemySpawner _enemySpawner;
+
     [SerializeField]
     private LayerMask groundLayer, playerLayer;
     private NavMeshAgent _agent;
@@ -24,13 +28,15 @@ public class EnemyCharacter : Character
     [SerializeField]
     private float sightRange, attackRange;
     private bool _playerInSightRange, _playerInAttackRange;
+    
 
-
+    #endregion
+    
     protected override void Awake()
     {
         base.Awake();
         _player = GameObject.Find("Paladin Player").transform;
-
+        _enemySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
         _agent = GetComponent<NavMeshAgent>();
     }
 
@@ -77,6 +83,10 @@ public class EnemyCharacter : Character
     protected override void Die()
     {
         base.Die();
+        _enemySpawner.AddKill();
+        _rigidbody.velocity = Vector3.zero;
+        
+        Destroy(characterCollider);
         Destroy(gameObject, 5f);
     }
 
@@ -128,5 +138,4 @@ public class EnemyCharacter : Character
     {
         _hasAttacked = false;
     }
-
 }
