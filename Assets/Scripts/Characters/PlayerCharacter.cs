@@ -137,7 +137,11 @@ public class PlayerCharacter : Character
             _rigidbody.velocity = moveDirection * _movementSpeed;
 
 
-            if (!_isAiming)
+            if (_isAiming && characterState == CharacterState.Equipped_Rifle)
+            {
+                // skip
+            }
+            else
             {
                 Quaternion lookRotation = Quaternion.LookRotation(moveDirection);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
