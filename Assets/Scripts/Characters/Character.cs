@@ -6,6 +6,7 @@ public enum CharacterState
     Unequipped,
     Equipped_OneHanded,
     Equipped_Rifle,
+    Equipped_HandGun,
 }
 
 public enum ActionState

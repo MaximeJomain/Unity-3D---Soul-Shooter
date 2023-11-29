@@ -58,7 +58,8 @@ public class PlayerCharacter : Character
     protected override void Start()
     {
         base.Start();
-        
+
+        characterState = CharacterState.Equipped_HandGun;
         _animator.SetInteger("characterState", (int)characterState);
         _movementSpeed = MovementSpeed;
         _aimCamera.SetActive(false);
@@ -137,6 +138,7 @@ public class PlayerCharacter : Character
             _rigidbody.velocity = moveDirection * _movementSpeed;
 
 
+            // TODO Gérer la condition avec les armes à feu
             if (_isAiming && characterState == CharacterState.Equipped_Rifle)
             {
                 // skip
@@ -154,7 +156,9 @@ public class PlayerCharacter : Character
     
     private void HandleAim()
     {
-        if (characterState != CharacterState.Equipped_Rifle) return;
+        if (characterState != CharacterState.Equipped_Rifle 
+            && characterState != CharacterState.Equipped_HandGun) 
+            return;
         
         _mouseWorldPosition = Vector3.zero;
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
