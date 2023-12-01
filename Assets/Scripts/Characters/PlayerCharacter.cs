@@ -49,17 +49,16 @@ public class PlayerCharacter : Character
     {
         base.Awake();
         
-        _followTransform = GameObject.Find("Camera Follow Target").transform;
+        _followTransform = GameObject.Find("/Camera Follow Target").transform;
         _mainCamera = Camera.main;
-        _moveCamera = GameObject.Find("Move Camera");
-        _aimCamera = GameObject.Find("Aim Camera");
+        _moveCamera = GameObject.Find("/Cameras/Move Camera");
+        _aimCamera = GameObject.Find("/Cameras/Aim Camera");
     }
 
     protected override void Start()
     {
         base.Start();
 
-        characterState = CharacterState.Equipped_HandGun;
         _animator.SetInteger("characterState", (int)characterState);
         _movementSpeed = MovementSpeed;
         _aimCamera.SetActive(false);

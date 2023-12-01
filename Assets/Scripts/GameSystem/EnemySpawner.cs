@@ -17,7 +17,8 @@ public class EnemySpawner : MonoBehaviour
     private float _timer;
     [SerializeField]
     private int _enemySpawned, _waveKillCounter, _waveNumber;
-    
+    public int WaveNumber => _waveNumber;
+
     private bool _waveIsOver;
 
     private void Awake()
