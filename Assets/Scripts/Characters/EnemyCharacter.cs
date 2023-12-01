@@ -38,6 +38,11 @@ public class EnemyCharacter : Character
         _player = GameObject.Find("Paladin Player").transform;
         _enemySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
         _agent = GetComponent<NavMeshAgent>();
+        
+        GameObject weaponInstance = Instantiate(weaponPrefab.gameObject);
+        weapon = weaponInstance.GetComponent<Weapon>();
+        weaponAttackCollider = weaponInstance.GetComponent<Collider>();
+        weapon.Equip(this);
     }
 
     protected override void Start()

@@ -18,9 +18,13 @@ public class SwordWeapon : Weapon
 
     public override void Equip(Character character)
     {
-        base.Equip(character);
-
-        character.characterState = CharacterState.Equipped_OneHanded;
+        if (character.SwordSocket)
+        {
+            transform.parent = character.SwordSocket;
+            transform.position = character.SwordSocket.position;
+            transform.rotation = character.SwordSocket.rotation;
+            character.CharacterState = CharacterState.Equipped_OneHandedSword;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

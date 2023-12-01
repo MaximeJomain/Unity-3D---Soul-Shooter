@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7836640868065553428}
   m_Layer: 0
-  m_Name: R_Hand Socket
+  m_Name: Sword Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,10 +307,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MovementSpeed: 1
+  CharacterState: 0
+  SwordSocket: {fileID: 7836640868065553428}
+  HandgunSocket: {fileID: 0}
+  RifleSocket: {fileID: 0}
   weaponPrefab: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
-  HandSocket: {fileID: 7836640868065553428}
-  RifleHandSocket: {fileID: 0}
-  characterState: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -318,7 +319,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   walkPointRange: 10
-  attackCooldown: 5
   sightRange: 10
   attackRange: 1
 --- !u!4 &2907359813998654643 stripped

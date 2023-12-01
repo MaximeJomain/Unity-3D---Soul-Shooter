@@ -25,12 +25,12 @@ public class RifleWeapon : Weapon
 
     public override void Equip(Character character)
     {
-        if (character.RifleHandSocket)
+        if (character.RifleSocket)
         {
-            transform.parent = character.RifleHandSocket;
-            transform.position = character.RifleHandSocket.position;
-            transform.rotation = character.RifleHandSocket.rotation;
-            character.characterState = CharacterState.Equipped_Rifle;
+            transform.parent = character.RifleSocket;
+            transform.position = character.RifleSocket.position;
+            transform.rotation = character.RifleSocket.rotation;
+            character.CharacterState = CharacterState.Equipped_Rifle;
         }
     }
 

@@ -12,17 +12,15 @@ public class PlayerCharacter : Character
     private Transform _debugSphere;
     [SerializeField]
     private LayerMask _debugLayerMask;
-    
     private CharacterActions _characterActions;
     private bool _isFiring;
     private bool _isAiming;
     private bool _hasAttacked;
-
     private Camera _mainCamera;
     private GameObject _moveCamera;
     private GameObject _aimCamera;
-
     private RifleWeapon _rifleWeapon;
+    private HandgunWeapon _handgunWeapon;
     private Vector3 _mouseWorldPosition;
     
     // MOVEMENT
@@ -42,24 +40,29 @@ public class PlayerCharacter : Character
     private float _maxCombo = 3;
     private float _comboTimeFrame = 0.7f;
     private float _comboElapsedTime;
-    
+    private bool _rotateToCamera = true;
+
     #endregion
 
     protected override void Awake()
     {
         base.Awake();
-        
         _followTransform = GameObject.Find("/Camera Follow Target").transform;
         _mainCamera = Camera.main;
         _moveCamera = GameObject.Find("/Cameras/Move Camera");
         _aimCamera = GameObject.Find("/Cameras/Aim Camera");
+        
+        GameObject weaponInstance = Instantiate(weaponPrefab.gameObject);
+        weapon = weaponInstance.GetComponent<Weapon>();
+        weaponAttackCollider = weaponInstance.GetComponent<Collider>();
+        weapon.Equip(this);
     }
 
     protected override void Start()
     {
         base.Start();
 
-        _animator.SetInteger("characterState", (int)characterState);
+        _animator.SetInteger("characterState", (int)CharacterState);
         _movementSpeed = MovementSpeed;
         _aimCamera.SetActive(false);
         _sensitivity = cameraSensitivity;
@@ -86,7 +89,7 @@ public class PlayerCharacter : Character
     {
         if (!IsAlive) return;
 
-        if (_actionState != ActionState.IsAttacking && characterState == CharacterState.Equipped_OneHanded)
+        if (_actionState != ActionState.IsAttacking && CharacterState == CharacterState.Equipped_OneHandedSword)
             _comboElapsedTime += Time.deltaTime;
         
         if (Health <= 0f) Die();
@@ -137,12 +140,7 @@ public class PlayerCharacter : Character
             _rigidbody.velocity = moveDirection * _movementSpeed;
 
 
-            // TODO Gérer la condition avec les armes à feu
-            if (_isAiming && characterState == CharacterState.Equipped_Rifle)
-            {
-                // skip
-            }
-            else
+            if (_rotateToCamera)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(moveDirection);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
@@ -155,8 +153,8 @@ public class PlayerCharacter : Character
     
     private void HandleAim()
     {
-        if (characterState != CharacterState.Equipped_Rifle 
-            && characterState != CharacterState.Equipped_HandGun) 
+        if (CharacterState != CharacterState.Equipped_Rifle 
+            && CharacterState != CharacterState.Equipped_HandGun) 
             return;
         
         _mouseWorldPosition = Vector3.zero;
@@ -171,6 +169,7 @@ public class PlayerCharacter : Character
         
         if (_isAiming)
         {
+            _rotateToCamera = false;
             if (!_aimCamera.activeInHierarchy)
             {
                 _moveCamera.SetActive(false);
@@ -187,6 +186,7 @@ public class PlayerCharacter : Character
         }
         else if (!_isAiming)
         {
+            _rotateToCamera = true;
             if (!_moveCamera.activeInHierarchy)
             {
                 _moveCamera.SetActive(true);
@@ -202,7 +202,7 @@ public class PlayerCharacter : Character
         if (_actionState != ActionState.Unoccupied) return;
         
         // SWORD
-        if (characterState == CharacterState.Equipped_OneHanded)
+        if (CharacterState == CharacterState.Equipped_OneHandedSword)
         {
             if (!_isFiring)
                 _hasAttacked = false;
@@ -214,19 +214,46 @@ public class PlayerCharacter : Character
             }
         }
         
+        // HANDGUN
+        else if (CharacterState == CharacterState.Equipped_HandGun)
+        {
+            if (!_handgunWeapon)
+            {
+                _handgunWeapon = weapon.GetComponent<HandgunWeapon>();
+            }
+
+            if (_handgunWeapon)
+            {
+                if (_isFiring && _isAiming && _handgunWeapon.ReadyToShoot)
+                {
+                    _handgunWeapon.Shoot(_mouseWorldPosition);
+                    _animator.SetTrigger("Shoot");
+                }
+                // else 
+                //     _animator.SetBool("IsShooting", false);
+            }
+        }
+        
         // RIFLE
-        else if (characterState == CharacterState.Equipped_Rifle)
+        else if (CharacterState == CharacterState.Equipped_Rifle)
         {
             if (!_rifleWeapon)
             {
-                _rifleWeapon = _weapon.GetComponent<RifleWeapon>();
+                _rifleWeapon = weapon.GetComponent<RifleWeapon>();
             }
-            
-            if (_isFiring && _isAiming) 
-                ShootRifle();
-            else 
-                _animator.SetBool("IsShooting", false);
+
+            if (_rifleWeapon)
+            {
+                if (_isFiring && _isAiming)
+                {
+                    _rifleWeapon.Shoot(_mouseWorldPosition);
+                    _animator.SetBool("IsShooting", true);
+                }
+                else 
+                    _animator.SetBool("IsShooting", false);
+            }
         }
+        
     }
 
     private void AttackWithSword()
@@ -247,15 +274,6 @@ public class PlayerCharacter : Character
         if (_attackCombo > _maxCombo)
         {
             _attackCombo = 1;
-        }
-    }
-
-    private void ShootRifle()
-    {
-        if (_rifleWeapon)
-        {
-            _rifleWeapon.Shoot(_mouseWorldPosition);
-            _animator.SetBool("IsShooting", true);
         }
     }
     
