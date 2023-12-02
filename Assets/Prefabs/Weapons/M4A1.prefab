@@ -43,6 +43,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M4A1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fddeeac0ebed86c4cab4320764b5c227, type: 3}
+      propertyPath: m_TagString
+      value: Rifle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fddeeac0ebed86c4cab4320764b5c227, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -152,9 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 20
+  _pickable: {fileID: 0}
   bulletPrefab: {fileID: 1504144087355591562, guid: 0d0de2ed14abfe7448cb36312c7526d2, type: 3}
   canon: {fileID: 4558002163695888363}
-  shotVelocity: 100
 --- !u!4 &3950958066371242019 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: fddeeac0ebed86c4cab4320764b5c227, type: 3}

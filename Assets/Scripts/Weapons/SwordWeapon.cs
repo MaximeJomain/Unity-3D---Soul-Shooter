@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SwordWeapon : Weapon
 {
-    private Collider _attackCollider;
+    private CapsuleCollider _attackCollider;
 
     private void Awake()
     {
-        _attackCollider = GetComponent<Collider>();
+        _attackCollider = GetComponent<CapsuleCollider>();
     }
 
     private void Start()
@@ -18,6 +18,8 @@ public class SwordWeapon : Weapon
 
     public override void Equip(Character character)
     {
+        base.Equip(character);
+        
         if (character.SwordSocket)
         {
             transform.parent = character.SwordSocket;
@@ -34,6 +36,5 @@ public class SwordWeapon : Weapon
         {
             target.TakeDamage(Damage);
         }
-        
     }
 }

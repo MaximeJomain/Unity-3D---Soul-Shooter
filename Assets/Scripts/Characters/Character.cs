@@ -31,12 +31,10 @@ public class Character : MonoBehaviour
     public Transform SwordSocket, HandgunSocket, RifleSocket;
     
     protected bool IsAlive { get; private set; }
-    [SerializeField]
-    protected Weapon weaponPrefab;
     protected bool _isInvincible = false;
     protected Rigidbody _rigidbody;
     protected Animator _animator;
-    protected Weapon weapon;
+    protected Weapon equippedWeapon;
     protected ActionState _actionState = ActionState.Unoccupied;
     protected Collider weaponAttackCollider;
     protected CapsuleCollider characterCollider;
@@ -96,5 +94,10 @@ public class Character : MonoBehaviour
     {
         IsAlive = false;
         _animator.SetTrigger("Death");
+    }
+
+    public void SetEquippedWeapon(Weapon weapon)
+    {
+        equippedWeapon = weapon;
     }
 }

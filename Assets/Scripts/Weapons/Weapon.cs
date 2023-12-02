@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -5,5 +6,11 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     public float Damage;
 
-    public virtual void Equip(Character character) {}
+    [SerializeField]
+    private Pickable _pickable;
+    
+    public virtual void Equip(Character character)
+    {
+        _pickable.SetColliderEnabled(false);
+    }
 }

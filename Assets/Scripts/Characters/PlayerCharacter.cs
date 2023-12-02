@@ -23,6 +23,9 @@ public class PlayerCharacter : Character
     private HandgunWeapon _handgunWeapon;
     private Vector3 _mouseWorldPosition;
     
+    [SerializeField]
+    private Weapon _overlapWeapon;
+    
     // MOVEMENT
     [SerializeField]
     private float cameraSensitivity = 3f, aimSensitivity = 1.5f;
@@ -51,18 +54,12 @@ public class PlayerCharacter : Character
         _mainCamera = Camera.main;
         _moveCamera = GameObject.Find("/Cameras/Move Camera");
         _aimCamera = GameObject.Find("/Cameras/Aim Camera");
-        
-        GameObject weaponInstance = Instantiate(weaponPrefab.gameObject);
-        weapon = weaponInstance.GetComponent<Weapon>();
-        weaponAttackCollider = weaponInstance.GetComponent<Collider>();
-        weapon.Equip(this);
     }
 
     protected override void Start()
     {
         base.Start();
 
-        _animator.SetInteger("characterState", (int)CharacterState);
         _movementSpeed = MovementSpeed;
         _aimCamera.SetActive(false);
         _sensitivity = cameraSensitivity;
@@ -76,6 +73,7 @@ public class PlayerCharacter : Character
 
             _characterActions.Player.Move.performed += input => _move = input.ReadValue<Vector2>();
             _characterActions.Player.Look.performed += input => _look = input.ReadValue<Vector2>();
+            _characterActions.Player.Interact.performed += _ => Interact();
             _characterActions.Player.Fire.performed += _ => _isFiring = true;
             _characterActions.Player.Fire.canceled += _ => _isFiring = false;
             _characterActions.Player.Aim.performed += _ => _isAiming = true;
@@ -88,6 +86,8 @@ public class PlayerCharacter : Character
     protected override void Update()
     {
         if (!IsAlive) return;
+        
+        _animator.SetInteger("characterState", (int)CharacterState);
 
         if (_actionState != ActionState.IsAttacking && CharacterState == CharacterState.Equipped_OneHandedSword)
             _comboElapsedTime += Time.deltaTime;
@@ -219,7 +219,7 @@ public class PlayerCharacter : Character
         {
             if (!_handgunWeapon)
             {
-                _handgunWeapon = weapon.GetComponent<HandgunWeapon>();
+                _handgunWeapon = equippedWeapon.GetComponent<HandgunWeapon>();
             }
 
             if (_handgunWeapon)
@@ -239,7 +239,7 @@ public class PlayerCharacter : Character
         {
             if (!_rifleWeapon)
             {
-                _rifleWeapon = weapon.GetComponent<RifleWeapon>();
+                _rifleWeapon = equippedWeapon.GetComponent<RifleWeapon>();
             }
 
             if (_rifleWeapon)
@@ -294,5 +294,20 @@ public class PlayerCharacter : Character
     private void DodgeEnd()
     {
         _isInvincible = false;
+    }
+
+    private void Interact()
+    {
+        if (_overlapWeapon)
+        {
+            equippedWeapon = _overlapWeapon;
+            weaponAttackCollider = equippedWeapon.GetComponent<CapsuleCollider>();
+            _overlapWeapon.Equip(this);
+        }
+    }
+
+    public void SetOverlapWeapon(Weapon overlapWeapon)
+    {
+        _overlapWeapon = overlapWeapon;
     }
 }

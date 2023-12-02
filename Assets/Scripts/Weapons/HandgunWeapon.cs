@@ -47,6 +47,8 @@ public class HandgunWeapon : Weapon
     
     public override void Equip(Character character)
     {
+        base.Equip(character);
+
         if (character.HandgunSocket)
         {
             transform.parent = character.HandgunSocket;

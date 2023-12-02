@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: -5105342646471711678}
   m_Layer: 0
   m_Name: HandGun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 40
+  _pickable: {fileID: 0}
   bulletPrefab: {fileID: 1504144087355591562, guid: 0d0de2ed14abfe7448cb36312c7526d2, type: 3}
   canon: {fileID: 4816739703633580893}
 --- !u!1 &5407226898616932627

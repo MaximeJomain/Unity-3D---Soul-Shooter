@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class EnemyCharacter : Character
@@ -7,6 +8,10 @@ public class EnemyCharacter : Character
     #region Fields
     
     private EnemySpawner _enemySpawner;
+    
+    [FormerlySerializedAs("weaponPrefab")]
+    [SerializeField]
+    private Weapon _weaponPrefab;
 
     [SerializeField]
     private LayerMask groundLayer, playerLayer;
@@ -39,10 +44,10 @@ public class EnemyCharacter : Character
         _enemySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
         _agent = GetComponent<NavMeshAgent>();
         
-        GameObject weaponInstance = Instantiate(weaponPrefab.gameObject);
-        weapon = weaponInstance.GetComponent<Weapon>();
+        GameObject weaponInstance = Instantiate(_weaponPrefab.gameObject);
+        equippedWeapon = weaponInstance.GetComponent<Weapon>();
         weaponAttackCollider = weaponInstance.GetComponent<Collider>();
-        weapon.Equip(this);
+        equippedWeapon.Equip(this);
     }
 
     protected override void Start()

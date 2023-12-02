@@ -25,6 +25,8 @@ public class RifleWeapon : Weapon
 
     public override void Equip(Character character)
     {
+        base.Equip(character);
+
         if (character.RifleSocket)
         {
             transform.parent = character.RifleSocket;
