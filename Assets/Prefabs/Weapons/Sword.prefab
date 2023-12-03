@@ -188,4 +188,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 50
-  _pickable: {fileID: 5937732124940562056}
+  _pickable: {fileID: 2989497206819693695}

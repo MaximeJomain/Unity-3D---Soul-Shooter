@@ -7,10 +7,10 @@ public class Weapon : MonoBehaviour
     public float Damage;
 
     [SerializeField]
-    private Pickable _pickable;
+    private GameObject _pickable;
     
     public virtual void Equip(Character character)
     {
-        _pickable.SetColliderEnabled(false);
+        _pickable.SetActive(false);
     }
 }
