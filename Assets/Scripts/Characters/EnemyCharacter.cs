@@ -9,6 +9,10 @@ public class EnemyCharacter : Character
     
     private EnemySpawner _enemySpawner;
     
+    [SerializeField]
+    private int _spawnCost;
+    public int SpawnCost => _spawnCost;
+    
     [FormerlySerializedAs("weaponPrefab")]
     [SerializeField]
     private Weapon _weaponPrefab;
@@ -33,7 +37,6 @@ public class EnemyCharacter : Character
     [SerializeField]
     private float sightRange, attackRange;
     private bool _playerInSightRange, _playerInAttackRange;
-    
 
     #endregion
     

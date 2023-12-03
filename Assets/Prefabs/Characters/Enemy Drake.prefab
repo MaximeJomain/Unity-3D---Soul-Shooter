@@ -322,13 +322,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c39a00341bdbb4788f5b51c9e15a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  _baseHealth: 150
+  Health: 150
   MovementSpeed: 1
   CharacterState: 0
   SwordSocket: {fileID: 808636316997978424}
   HandgunSocket: {fileID: 0}
   RifleSocket: {fileID: 0}
-  _weaponPrefab: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+  _spawnCost: 20
+  _weaponPrefab: {fileID: 774835495348378673, guid: 35284d8ccb9889147ba77e4b34f14543, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -425,7 +427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6424072432955449063, guid: 9e43b9b73179dc24b9617021ca72808e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -537.8591
+      value: -538.1044
       objectReference: {fileID: 0}
     - target: {fileID: 6424072432955449063, guid: 9e43b9b73179dc24b9617021ca72808e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

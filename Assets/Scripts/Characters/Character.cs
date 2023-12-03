@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -23,7 +24,11 @@ public class Character : MonoBehaviour
     #region Class Fields
 
     [SerializeField]
+    private float _baseHealth;
+    
+    [NonSerialized]
     public float Health;
+    
     [SerializeField]
     public float MovementSpeed;
     [HideInInspector]
@@ -44,6 +49,7 @@ public class Character : MonoBehaviour
 
     protected virtual void Awake()
     {
+        Health = _baseHealth;
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         characterCollider = GetComponent<CapsuleCollider>();

@@ -2143,17 +2143,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206ed599da00e92459f728472a6869a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _baseHealth: 200
   Health: 200
   MovementSpeed: 5
   CharacterState: 0
   SwordSocket: {fileID: 5248531424129197382}
   HandgunSocket: {fileID: 4661762757253419022}
   RifleSocket: {fileID: 1162920297671326743}
-  weaponPrefab: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
-  _debugSphere: {fileID: 0}
-  _debugLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
+  _inventory: []
   cameraSensitivity: 3
   aimSensitivity: 1
   rotationSpeed: 10

@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameOverScreen _gameOverScreen;
     private bool _isGameOver;
+    private RifleWeapon _rifle;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
         _TMP_wave = GameObject.Find("/Canvas/Wave").GetComponent<TMP_Text>();
         _enemySpawner = GameObject.Find("/Enemy Spawner").GetComponent<EnemySpawner>();
         _handGun = GameObject.Find("/HandGun").GetComponent<HandgunWeapon>();
+        _rifle = GameObject.Find("/M4A1").GetComponent<RifleWeapon>();
         _playerCharacter = GameObject.Find("/Paladin Player").GetComponent<PlayerCharacter>();
         // _gameOverScreen = GameObject.Find("/Canvas/GameOverScreen").GetComponent<GameOverScreen>();
     }
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
         _highScore = PlayerPrefs.GetInt("High-score", 0);
         
         _handGun.gameObject.SetActive(false);
+        _rifle.gameObject.SetActive(false);
         if (_gameOverScreen.gameObject.activeInHierarchy)
         {
             _gameOverScreen.gameObject.SetActive(false);
@@ -72,6 +75,11 @@ public class GameManager : MonoBehaviour
         {
             _handGun.gameObject.SetActive(true);
         }
+        
+        if (_enemySpawner.WaveNumber == 4 && !_rifle.IsEquipped)
+        {
+            _rifle.gameObject.SetActive(true);
+        }
     }
 
     private void GameOver()
@@ -96,5 +104,10 @@ public class GameManager : MonoBehaviour
     public void AddKill()
     {
         _killCounter++;
+    }
+
+    public void AddWave()
+    {
+        _playerCharacter.Health = 200f;
     }
 }

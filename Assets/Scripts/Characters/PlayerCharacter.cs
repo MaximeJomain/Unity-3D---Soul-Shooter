@@ -79,6 +79,7 @@ public class PlayerCharacter : Character
             _characterActions.Player.Aim.performed += _ => _isAiming = true;
             _characterActions.Player.Aim.canceled += _ => _isAiming = false;
             _characterActions.Player.Inventory.performed += input => _DPADInput = input.ReadValue<Vector2>();
+            _characterActions.Player.Dodge.performed += _ => OnDodge();
         }
         
         _characterActions.Enable();
@@ -160,7 +161,9 @@ public class PlayerCharacter : Character
     
     private void HandleMovement()
     {
-        if (_actionState != ActionState.Unoccupied)
+        if (_actionState == ActionState.IsAttacking)
+            _movementSpeed = MovementSpeed * 0.3f;
+        else if (_isAiming && _canAim)
             _movementSpeed = MovementSpeed * 0.3f;
         else
             _movementSpeed = MovementSpeed;
@@ -214,6 +217,8 @@ public class PlayerCharacter : Character
         }
         else if (!_isAiming)
         {
+            _movementSpeed = MovementSpeed;
+            
             _rotateToCamera = true;
             if (!_moveCamera.activeInHierarchy)
             {

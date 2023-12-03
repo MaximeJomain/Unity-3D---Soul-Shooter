@@ -305,13 +305,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c39a00341bdbb4788f5b51c9e15a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
-  MovementSpeed: 1
+  _baseHealth: 100
+  MovementSpeed: 1.5
   CharacterState: 0
   SwordSocket: {fileID: 7836640868065553428}
   HandgunSocket: {fileID: 0}
   RifleSocket: {fileID: 0}
-  weaponPrefab: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
+  _spawnCost: 10
+  _weaponPrefab: {fileID: -5447735403696034219, guid: c5a50640edc31934b923c9122f14ff5e, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
