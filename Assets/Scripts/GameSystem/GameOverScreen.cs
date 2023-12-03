@@ -8,17 +8,19 @@ using UnityEngine.SceneManagement;
 public class GameOverScreen : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text _gameOverText;
+    private TMP_Text _gameOverText, _highscoreText;
 
     [SerializeField]
     private GameObject _restartButton, _quitButton, _eventSystem;
 
     private float _timer;
     private float _timeAlpha;
+    private int _highscore;
 
     private void OnEnable()
     {
         _gameOverText.gameObject.SetActive(false);
+        _highscoreText.gameObject.SetActive(false);
         _restartButton.SetActive(false);
         _quitButton.SetActive(false);
         _eventSystem.SetActive(false);
@@ -56,7 +58,10 @@ public class GameOverScreen : MonoBehaviour
     {
         if (_timer > 3f)
         {
+            _highscoreText.text = "You survived " + _highscore + " waves";
+            
             _eventSystem.SetActive(true);
+            _highscoreText.gameObject.SetActive(true);
             _restartButton.SetActive(true);
             _quitButton.SetActive(true);
         }
@@ -71,7 +76,9 @@ public class GameOverScreen : MonoBehaviour
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
-    
-    
 
+    public void SetHighscore(int value)
+    {
+        _highscore = value;
+    }
 }

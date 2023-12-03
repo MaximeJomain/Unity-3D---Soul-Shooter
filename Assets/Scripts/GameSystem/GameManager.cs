@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private EnemySpawner _enemySpawner;
     private HandgunWeapon _handGun;
     private PlayerCharacter _playerCharacter;
+    private int _highScore;
     
     [SerializeField]
     private GameOverScreen _gameOverScreen;
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        _highScore = PlayerPrefs.GetInt("High-score", 0);
+        
         _handGun.gameObject.SetActive(false);
         if (_gameOverScreen.gameObject.activeInHierarchy)
         {
@@ -74,6 +77,16 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         _isGameOver = true;
+        int finalScore = _enemySpawner.WaveNumber;
+        
+        _gameOverScreen.SetHighscore(finalScore);
+
+        if (finalScore > _highScore)
+        {
+            PlayerPrefs.SetInt("High-score", finalScore);
+            PlayerPrefs.Save();
+        }
+        
         if (!_gameOverScreen.gameObject.activeInHierarchy)
         {
             _gameOverScreen.gameObject.SetActive(true);
