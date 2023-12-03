@@ -50,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Wave1()
     {
-        const int maxEnemies = 5;
+        const int maxEnemies = 1;
         const float spawnTime = 5f;
         
         if (_timer >= spawnTime && _enemySpawned < maxEnemies)
@@ -78,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
     
     private void Wave2()
     {
-        const int maxEnemies = 10;
+        const int maxEnemies = 1;
         const float spawnTime = 3f;
         
         if (_timer >= spawnTime && _enemySpawned < maxEnemies)

@@ -359,10 +359,6 @@ public class PlayerCharacter : Character
 
     private void SelectWeapon(int index)
     {
-        _inventory[index].Equip(this);
-        equippedWeapon = _inventory[index];
-        _animator.SetInteger("characterState", (int)CharacterState);
-
         foreach (Weapon weapon in _inventory)
         {
             if (_inventory.IndexOf(weapon) == _weaponEquippedIndex)
@@ -374,6 +370,10 @@ public class PlayerCharacter : Character
                 weapon.gameObject.SetActive(false);
             }
         }
+        
+        _inventory[index].Equip(this);
+        equippedWeapon = _inventory[index];
+        _animator.SetInteger("characterState", (int)CharacterState);
     }
 
     public void SetOverlapWeapon(Weapon overlapWeapon)

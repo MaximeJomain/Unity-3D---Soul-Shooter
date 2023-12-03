@@ -7,29 +7,47 @@ public class GameManager : MonoBehaviour
     private float _elapsedTime;
     private TMP_Text _TMP_timer, _TMP_wave;
     private EnemySpawner _enemySpawner;
-    private GameObject _handGun;
+    private HandgunWeapon _handGun;
+    private PlayerCharacter _playerCharacter;
+    
+    [SerializeField]
+    private GameOverScreen _gameOverScreen;
+    private bool _isGameOver;
 
     private void Awake()
     {
         _TMP_timer = GameObject.Find("/Canvas/Timer").GetComponent<TMP_Text>();
         _TMP_wave = GameObject.Find("/Canvas/Wave").GetComponent<TMP_Text>();
         _enemySpawner = GameObject.Find("/Enemy Spawner").GetComponent<EnemySpawner>();
-        _handGun = GameObject.Find("/HandGun");
+        _handGun = GameObject.Find("/HandGun").GetComponent<HandgunWeapon>();
+        _playerCharacter = GameObject.Find("/Paladin Player").GetComponent<PlayerCharacter>();
+        // _gameOverScreen = GameObject.Find("/Canvas/GameOverScreen").GetComponent<GameOverScreen>();
     }
 
     private void Start()
     {
-        // _handGun.SetActive(false);
+        _handGun.gameObject.SetActive(false);
+        if (_gameOverScreen.gameObject.activeInHierarchy)
+        {
+            _gameOverScreen.gameObject.SetActive(false);
+        }
         _killCounter = 0;
         _elapsedTime = 0f;
+        _isGameOver = false;
     }
 
     private void Update()
     {
-        _elapsedTime += Time.deltaTime;
+        if (!_isGameOver)
+            _elapsedTime += Time.deltaTime;
 
         handleGUI();
         handleWeaponSpawn();
+
+        if (!_playerCharacter.IsAlive && !_isGameOver)
+        {
+            GameOver();
+        }
     }
 
     private void handleGUI()
@@ -47,9 +65,18 @@ public class GameManager : MonoBehaviour
     
     private void handleWeaponSpawn()
     {
-        if (_enemySpawner.WaveNumber == 2)
+        if (_enemySpawner.WaveNumber == 2 && !_handGun.IsEquipped)
         {
-            _handGun.SetActive(true);
+            _handGun.gameObject.SetActive(true);
+        }
+    }
+
+    private void GameOver()
+    {
+        _isGameOver = true;
+        if (!_gameOverScreen.gameObject.activeInHierarchy)
+        {
+            _gameOverScreen.gameObject.SetActive(true);
         }
     }
 

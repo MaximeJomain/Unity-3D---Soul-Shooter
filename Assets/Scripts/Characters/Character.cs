@@ -31,7 +31,7 @@ public class Character : MonoBehaviour
     [SerializeField]
     public Transform SwordSocket, HandgunSocket, RifleSocket;
     
-    protected bool IsAlive { get; private set; }
+    public bool IsAlive { get; private set; }
     protected bool _isInvincible = false;
     protected Rigidbody _rigidbody;
     protected Animator _animator;
@@ -94,6 +94,10 @@ public class Character : MonoBehaviour
     protected virtual void Die()
     {
         IsAlive = false;
+        if (weaponAttackCollider)
+        {
+            weaponAttackCollider.enabled = false;
+        }
         _animator.SetTrigger("Death");
     }
 
