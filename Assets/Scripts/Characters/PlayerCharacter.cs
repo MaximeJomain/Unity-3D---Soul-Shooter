@@ -1,17 +1,17 @@
 using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 public class PlayerCharacter : Character
 {
     #region Class Fields
 
+    private Vector2 _DPADInput;
+    private int _weaponEquippedIndex;
+    
     [SerializeField]
-    private Transform _debugSphere;
-    [SerializeField]
-    private LayerMask _debugLayerMask;
+    private List<Weapon> _inventory = new List<Weapon>();
+    
     private CharacterActions _characterActions;
     private bool _isFiring;
     private bool _isAiming;
@@ -23,7 +23,6 @@ public class PlayerCharacter : Character
     private HandgunWeapon _handgunWeapon;
     private Vector3 _mouseWorldPosition;
     
-    [SerializeField]
     private Weapon _overlapWeapon;
     
     // MOVEMENT
@@ -44,6 +43,7 @@ public class PlayerCharacter : Character
     private float _comboTimeFrame = 0.7f;
     private float _comboElapsedTime;
     private bool _rotateToCamera = true;
+    private bool _canAim;
 
     #endregion
 
@@ -78,6 +78,7 @@ public class PlayerCharacter : Character
             _characterActions.Player.Fire.canceled += _ => _isFiring = false;
             _characterActions.Player.Aim.performed += _ => _isAiming = true;
             _characterActions.Player.Aim.canceled += _ => _isAiming = false;
+            _characterActions.Player.Inventory.performed += input => _DPADInput = input.ReadValue<Vector2>();
         }
         
         _characterActions.Enable();
@@ -86,8 +87,6 @@ public class PlayerCharacter : Character
     protected override void Update()
     {
         if (!IsAlive) return;
-        
-        _animator.SetInteger("characterState", (int)CharacterState);
 
         if (_actionState != ActionState.IsAttacking && CharacterState == CharacterState.Equipped_OneHandedSword)
             _comboElapsedTime += Time.deltaTime;
@@ -97,9 +96,43 @@ public class PlayerCharacter : Character
         HandleCamera();
         HandleMovement();
         HandleAim();
+        HandleInventory();
         HandleAttack();
     }
-    
+
+    private void HandleInventory()
+    {
+        if (_actionState != ActionState.Unoccupied) return;
+
+        int newEquipIndex = _weaponEquippedIndex;
+        
+        if (_DPADInput != Vector2.zero)
+        {
+            if (_DPADInput.y > 0f)
+            {
+                newEquipIndex = 0;
+            }
+            else if (_DPADInput.y < 0f)
+            {
+                newEquipIndex = 2;
+            }
+            else if (_DPADInput.x > 0f)
+            {
+                newEquipIndex = 1;
+            }
+            else if (_DPADInput.x < 0f)
+            {
+                newEquipIndex = 3;
+            }
+
+            if (newEquipIndex != _weaponEquippedIndex && newEquipIndex < _inventory.Count)
+            {
+                _weaponEquippedIndex = newEquipIndex;
+                SelectWeapon(_weaponEquippedIndex);
+            }
+        }
+    }
+
     private void HandleCamera()
     {
         _followTransform.position = new Vector3(transform.position.x, _followTransform.position.y, transform.position.z);
@@ -153,21 +186,16 @@ public class PlayerCharacter : Character
     
     private void HandleAim()
     {
-        if (CharacterState != CharacterState.Equipped_Rifle 
-            && CharacterState != CharacterState.Equipped_HandGun) 
-            return;
-        
         _mouseWorldPosition = Vector3.zero;
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
         Ray ray = _mainCamera.ScreenPointToRay(screenCenterPoint);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f))
         {
-            _debugSphere.position = raycastHit.point;
             _mouseWorldPosition = raycastHit.point;
         }
         
-        if (_isAiming)
+        if (_isAiming && _canAim)
         {
             _rotateToCamera = false;
             if (!_aimCamera.activeInHierarchy)
@@ -200,23 +228,41 @@ public class PlayerCharacter : Character
     private void HandleAttack()
     {
         if (_actionState != ActionState.Unoccupied) return;
+
+        // UNEQUIPPED
+        if (CharacterState == CharacterState.Unequipped)
+        {
+            _canAim = false;
+        }
         
         // SWORD
-        if (CharacterState == CharacterState.Equipped_OneHandedSword)
+        else if (CharacterState == CharacterState.Equipped_OneHandedSword)
         {
-            if (!_isFiring)
-                _hasAttacked = false;
+            _canAim = false;
             
-            if (_isFiring && !_hasAttacked)
+            if (!weaponAttackCollider)
             {
-                _hasAttacked = true;
-                AttackWithSword();
+                weaponAttackCollider = equippedWeapon.GetComponent<CapsuleCollider>();
+            }
+
+            if (weaponAttackCollider)
+            {
+                if (!_isFiring)
+                    _hasAttacked = false;
+            
+                if (_isFiring && !_hasAttacked)
+                {
+                    _hasAttacked = true;
+                    AttackWithSword();
+                }
             }
         }
         
         // HANDGUN
         else if (CharacterState == CharacterState.Equipped_HandGun)
         {
+            _canAim = true;
+            
             if (!_handgunWeapon)
             {
                 _handgunWeapon = equippedWeapon.GetComponent<HandgunWeapon>();
@@ -237,6 +283,8 @@ public class PlayerCharacter : Character
         // RIFLE
         else if (CharacterState == CharacterState.Equipped_Rifle)
         {
+            _canAim = true;
+            
             if (!_rifleWeapon)
             {
                 _rifleWeapon = equippedWeapon.GetComponent<RifleWeapon>();
@@ -300,9 +348,31 @@ public class PlayerCharacter : Character
     {
         if (_overlapWeapon)
         {
-            equippedWeapon = _overlapWeapon;
-            weaponAttackCollider = equippedWeapon.GetComponent<CapsuleCollider>();
-            _overlapWeapon.Equip(this);
+            _inventory.Add(_overlapWeapon);
+            _weaponEquippedIndex = _inventory.IndexOf(_overlapWeapon);
+            
+            SelectWeapon(_weaponEquippedIndex);
+
+            _overlapWeapon = null;
+        }
+    }
+
+    private void SelectWeapon(int index)
+    {
+        _inventory[index].Equip(this);
+        equippedWeapon = _inventory[index];
+        _animator.SetInteger("characterState", (int)CharacterState);
+
+        foreach (Weapon weapon in _inventory)
+        {
+            if (_inventory.IndexOf(weapon) == _weaponEquippedIndex)
+            {
+                weapon.gameObject.SetActive(true);
+            }
+            else
+            {
+                weapon.gameObject.SetActive(false);
+            }
         }
     }
 

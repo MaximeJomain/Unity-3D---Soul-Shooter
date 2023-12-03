@@ -7,16 +7,19 @@ public class GameManager : MonoBehaviour
     private float _elapsedTime;
     private TMP_Text _TMP_timer, _TMP_wave;
     private EnemySpawner _enemySpawner;
+    private GameObject _handGun;
 
     private void Awake()
     {
         _TMP_timer = GameObject.Find("/Canvas/Timer").GetComponent<TMP_Text>();
         _TMP_wave = GameObject.Find("/Canvas/Wave").GetComponent<TMP_Text>();
         _enemySpawner = GameObject.Find("/Enemy Spawner").GetComponent<EnemySpawner>();
+        _handGun = GameObject.Find("/HandGun");
     }
 
     private void Start()
     {
+        // _handGun.SetActive(false);
         _killCounter = 0;
         _elapsedTime = 0f;
     }
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
         _elapsedTime += Time.deltaTime;
 
         handleGUI();
+        handleWeaponSpawn();
     }
 
     private void handleGUI()
@@ -39,6 +43,14 @@ public class GameManager : MonoBehaviour
         //update Wave Counter
         string formattedText = $"Wave {_enemySpawner.WaveNumber}";
         _TMP_wave.text = formattedText;
+    }
+    
+    private void handleWeaponSpawn()
+    {
+        if (_enemySpawner.WaveNumber == 2)
+        {
+            _handGun.SetActive(true);
+        }
     }
 
     public void AddKill()

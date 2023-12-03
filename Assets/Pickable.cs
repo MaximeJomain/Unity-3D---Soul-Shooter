@@ -7,7 +7,7 @@ public class Pickable : MonoBehaviour
     private SphereCollider _hoverCollider;
     private float _elapsedTime;
     private Vector3 _startPosition;
-    private const float _timeConstant = 1.5f;
+    private const float _timeConstant = 2f;
     private const float _sinAmplitude = 0.2f;
 
     private void Awake()

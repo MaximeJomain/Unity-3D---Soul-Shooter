@@ -14,6 +14,7 @@ public enum ActionState
     Unoccupied,
     IsAttacking,
     IsDodging,
+    IsAiming,
 }
 
 public class Character : MonoBehaviour
