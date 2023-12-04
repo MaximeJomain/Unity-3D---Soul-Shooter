@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec95f6f11a873c4d9685c4b1bdb4182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 70
+  Damage: 140
   _pickable: {fileID: 3564786024093296509}
 --- !u!136 &4385303615288879245
 CapsuleCollider:

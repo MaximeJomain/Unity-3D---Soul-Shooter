@@ -71,12 +71,12 @@ public class GameManager : MonoBehaviour
     
     private void handleWeaponSpawn()
     {
-        if (_enemySpawner.WaveNumber == 2 && !_handGun.IsEquipped)
+        if (_enemySpawner.WaveNumber == 3 && !_handGun.IsEquipped)
         {
             _handGun.gameObject.SetActive(true);
         }
         
-        if (_enemySpawner.WaveNumber == 4 && !_rifle.IsEquipped)
+        if (_enemySpawner.WaveNumber == 6 && !_rifle.IsEquipped)
         {
             _rifle.gameObject.SetActive(true);
         }
@@ -108,6 +108,6 @@ public class GameManager : MonoBehaviour
 
     public void AddWave()
     {
-        _playerCharacter.Health = 200f;
+        _playerCharacter.Health = _playerCharacter.BaseHealth;
     }
 }

@@ -25,7 +25,8 @@ public class Character : MonoBehaviour
 
     [SerializeField]
     private float _baseHealth;
-    
+    public float BaseHealth => _baseHealth;
+
     [NonSerialized]
     public float Health;
     

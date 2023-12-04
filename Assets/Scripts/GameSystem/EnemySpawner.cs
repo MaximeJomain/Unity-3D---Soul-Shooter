@@ -28,6 +28,8 @@ public class EnemySpawner : MonoBehaviour
 
     private float _healthMultiplier;
 
+    private float _spawnTime;
+
     private void Awake()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -36,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         _timer = 0f;
+        _spawnTime = 5f;
         _enemySpawned = 0;
         _waveKillCounter = 0;
         _waveNumber = 1;
@@ -57,11 +60,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnWave()
     {
-        const float spawnTime = 5f;
-
         if (enemiesToSpawn.Count > 0)
         {
-            if (_timer >= spawnTime)
+            if (_timer >= _spawnTime)
             {
                 _timer = 0f;
 
@@ -122,6 +123,10 @@ public class EnemySpawner : MonoBehaviour
         _enemySpawned = 0;
         _timer = 0f;
         _healthMultiplier *= 1.2f;
+        if (_spawnTime > 1.5f)
+        {
+            _spawnTime -= 0.3f;
+        }
         _waveValue = _waveNumber * 50;
         GenerateWave();
         _waveIsOver = false;

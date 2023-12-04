@@ -2143,8 +2143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206ed599da00e92459f728472a6869a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseHealth: 200
-  Health: 200
+  _baseHealth: 400
   MovementSpeed: 5
   CharacterState: 0
   SwordSocket: {fileID: 5248531424129197382}

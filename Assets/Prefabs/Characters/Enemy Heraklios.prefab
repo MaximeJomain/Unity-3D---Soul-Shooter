@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseHealth: 100
-  MovementSpeed: 1.5
+  MovementSpeed: 1.3
   CharacterState: 0
   SwordSocket: {fileID: 7836640868065553428}
   HandgunSocket: {fileID: 0}

@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1efcc2e150a99ec408ce7dc781f23ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 40
+  Damage: 70
   _pickable: {fileID: 6162067936921517361}
   bulletPrefab: {fileID: 1504144087355591562, guid: 0d0de2ed14abfe7448cb36312c7526d2, type: 3}
   canon: {fileID: 4816739703633580893}
